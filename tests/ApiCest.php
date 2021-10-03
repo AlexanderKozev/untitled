@@ -1,6 +1,6 @@
 <?php
 class ApiCest 
-{    
+{   //Запрос GET
     public function tryApi1(ApiTester $I)
     {
         $I->haveHttpHeader('secret', 'QWERTY000097531KEY');
@@ -8,6 +8,7 @@ class ApiCest
         $I->sendGet('/mnogopay/s/purchase',[]);
         $I->seeResponseCodeIs(502);
     }
+    //Запрос POST с валидными данными
     public function tryApi2(ApiTester $I)
     {
         $I->haveHttpHeader('secret', 'QWERTY000097531KEY');
@@ -23,6 +24,7 @@ class ApiCest
             'resp_code' => '000'
         ]);
     }
+    //Запрос PUT  с валидными данными
     public function tryApi3(ApiTester $I)
     {
         $I->haveHttpHeader('secret', 'QWERTY000097531KEY');
@@ -32,6 +34,7 @@ class ApiCest
         $I->seeResponseCodeIs(502);
         $I->seeResponseIsJson();
     }
+    //Запрос DELETE с валидными данными
     public function tryApi4(ApiTester $I)
     {
         $I->haveHttpHeader('secret', 'QWERTY000097531KEY');
@@ -41,6 +44,7 @@ class ApiCest
         $I->seeResponseCodeIs(502);
         $I->seeResponseIsJson();
     }
+    //Запрос POST со значением amount -1
     public function tryApi5(ApiTester $I)
     {
         $I->haveHttpHeader('secret', 'QWERTY000097531KEY');
@@ -51,6 +55,7 @@ class ApiCest
         $I->seeResponseIsJson();
         $I->seeResponseContains('{"resp_code":"111","message":"Incorrect parameter in request amount: -1"}');
     }
+    //Запрос POST со значением amount 0
     public function tryApi6(ApiTester $I)
     {
         $I->haveHttpHeader('secret', 'QWERTY000097531KEY');
@@ -66,6 +71,7 @@ class ApiCest
             'resp_code' => '000'
         ]);
     }
+    //Запрос POST со значением amount 32767
     public function tryApi7(ApiTester $I)
     {
         $I->haveHttpHeader('secret', 'QWERTY000097531KEY');
@@ -81,6 +87,7 @@ class ApiCest
             'resp_code' => '000'
         ]);
     }
+    //Запрос POST со значением amount 32768
     public function tryApi8(ApiTester $I)
     {
         $I->haveHttpHeader('secret', 'QWERTY000097531KEY');
@@ -91,6 +98,7 @@ class ApiCest
         $I->seeResponseIsJson();
         $I->seeResponseContains('{"resp_code":"333","message":"It is too much amount"}');
     }
+    //Запрос POST со значением amount ABC
     public function tryApi9(ApiTester $I)
     {
         $I->haveHttpHeader('secret', 'QWERTY000097531KEY');
@@ -101,6 +109,7 @@ class ApiCest
         $I->seeResponseIsJson();
         $I->seeResponseContains('{"resp_code":"111","message":"Incorrect parameter in request amount: abc"}');
     }
+    //Запрос POST пустым значением amount
     public function tryApi10(ApiTester $I)
     {
         $I->haveHttpHeader('secret', 'QWERTY000097531KEY');
@@ -111,6 +120,7 @@ class ApiCest
         $I->seeResponseIsJson();
         $I->seeResponseContains('{"resp_code":"222","message":"Required parameter is absent: amount"}');
     }
+    //Запрос POST со значением currency USD
     public function tryApi11(ApiTester $I)
     {
         $I->haveHttpHeader('secret', 'QWERTY000097531KEY');
@@ -121,6 +131,7 @@ class ApiCest
         $I->seeResponseIsJson();
         $I->seeResponseContains('{"resp_code":"111","message":"Incorrect parameter in request currency: USD"}');
     }
+    //Запрос POST с пустым значением currency
     public function tryApi12(ApiTester $I)
     {
         $I->haveHttpHeader('secret', 'QWERTY000097531KEY');
@@ -131,6 +142,7 @@ class ApiCest
         $I->seeResponseIsJson();
         $I->seeResponseContains('{"resp_code":"222","message":"Required parameter is absent : currency"}');
     }
+    //Запрос POST со значением currency ABC
     public function tryApi13(ApiTester $I)
     {
         $I->haveHttpHeader('secret', 'QWERTY000097531KEY');
@@ -141,6 +153,7 @@ class ApiCest
         $I->seeResponseIsJson();
         $I->seeResponseContains('{"resp_code":"111","message":"Incorrect parameter in request currency: abc"}');
     }
+    //Запрос POST со значением currency 123
     public function tryApi14(ApiTester $I)
     {
         $I->haveHttpHeader('secret', 'QWERTY000097531KEY');
@@ -151,6 +164,7 @@ class ApiCest
         $I->seeResponseIsJson();
         $I->seeResponseContains('{"resp_code":"111","message":"Incorrect parameter in request currency: 123"}');
     }
+    //Запрос POST со значением order_id 1
     public function tryApi15(ApiTester $I)
     {
         $I->haveHttpHeader('secret', 'QWERTY000097531KEY');
@@ -166,6 +180,7 @@ class ApiCest
             'resp_code' => '000'
         ]);
     }
+    //Запрос POST со значением order_id NTS12345678912345  (17 символов)
     public function tryApi16(ApiTester $I)
     {
         $I->haveHttpHeader('secret', 'QWERTY000097531KEY');
@@ -176,6 +191,7 @@ class ApiCest
         $I->seeResponseIsJson();
         $I->seeResponseContains('{"resp_code":"111","message":"Incorrect parameter in request order_id: NTS12345678912345"}');
     }
+    //Запрос POST со значением order_id 1234567891234  (16 символов)
     public function tryApi17(ApiTester $I)
     {
         $I->haveHttpHeader('secret', 'QWERTY000097531KEY');
@@ -191,6 +207,7 @@ class ApiCest
             'resp_code' => '000'
         ]);
     }
+    //Запрос POST с пустым значением order_id
     public function tryApi18(ApiTester $I)
     {
         $I->haveHttpHeader('secret', 'QWERTY000097531KEY');
@@ -201,6 +218,7 @@ class ApiCest
         $I->seeResponseIsJson();
         $I->seeResponseContains('{"resp_code":"222","message":"Required parameter is absent : order_id"}');
     }
+    //Запрос POST со значением discription 1
     public function tryApi19(ApiTester $I)
     {
         $I->haveHttpHeader('secret', 'QWERTY000097531KEY');
@@ -217,6 +235,7 @@ class ApiCest
             'description' => '1'
         ]);
     }
+    //Запрос POST со значением discription 33 символа
     public function tryApi20(ApiTester $I)
     {
         $I->haveHttpHeader('secret', 'QWERTY000097531KEY');
@@ -233,6 +252,7 @@ class ApiCest
             'description' => '123456789012345678901234567890123'
         ]);
     }
+    //Запрос POST с пустым значением discription
     public function tryApi21(ApiTester $I)
     {
         $I->haveHttpHeader('secret', 'QWERTY000097531KEY');
@@ -249,6 +269,7 @@ class ApiCest
             'description' => ''
         ]);
     }
+    //Запрос POST без секретного ключа
     public function tryApi22(ApiTester $I)
     {
         $I->haveHttpHeader('Content-Type', 'application/json');
