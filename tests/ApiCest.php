@@ -1,7 +1,10 @@
 <?php
 class ApiCest 
-{   //Запрос GET
-    public function tryApi1(ApiTester $I)
+{   /* Const */
+    Const ResponseError = "Notice: Undefined index: secret in /opt/app-root/src/mock/paysys/mnogopay/s/main.php on line 200\nIncorrect secret key";
+    /* Cases */
+    //Запрос GET
+    public function tryApi01(ApiTester $I)
     {
         $I->haveHttpHeader('secret', 'QWERTY000097531KEY');
         $I->haveHttpHeader('Content-Type', 'application/json');
@@ -9,7 +12,7 @@ class ApiCest
         $I->seeResponseCodeIs(502);
     }
     //Запрос POST с валидными данными
-    public function tryApi2(ApiTester $I)
+    public function tryApi02(ApiTester $I)
     {
         $I->haveHttpHeader('secret', 'QWERTY000097531KEY');
         $I->haveHttpHeader('Content-Type', 'application/json');
@@ -25,7 +28,7 @@ class ApiCest
         ]);
     }
     //Запрос PUT  с валидными данными
-    public function tryApi3(ApiTester $I)
+    public function tryApi03(ApiTester $I)
     {
         $I->haveHttpHeader('secret', 'QWERTY000097531KEY');
         $I->haveHttpHeader('Content-Type', 'application/json');
@@ -35,7 +38,7 @@ class ApiCest
         $I->seeResponseIsJson();
     }
     //Запрос DELETE с валидными данными
-    public function tryApi4(ApiTester $I)
+    public function tryApi04(ApiTester $I)
     {
         $I->haveHttpHeader('secret', 'QWERTY000097531KEY');
         $I->haveHttpHeader('Content-Type', 'application/json');
@@ -45,7 +48,7 @@ class ApiCest
         $I->seeResponseIsJson();
     }
     //Запрос POST со значением amount -1
-    public function tryApi5(ApiTester $I)
+    public function tryApi05(ApiTester $I)
     {
         $I->haveHttpHeader('secret', 'QWERTY000097531KEY');
         $I->haveHttpHeader('Content-Type', 'application/json');
@@ -56,7 +59,7 @@ class ApiCest
         $I->seeResponseContains('{"resp_code":"111","message":"Incorrect parameter in request amount: -1"}');
     }
     //Запрос POST со значением amount 0
-    public function tryApi6(ApiTester $I)
+    public function tryApi06(ApiTester $I)
     {
         $I->haveHttpHeader('secret', 'QWERTY000097531KEY');
         $I->haveHttpHeader('Content-Type', 'application/json');
@@ -72,7 +75,7 @@ class ApiCest
         ]);
     }
     //Запрос POST со значением amount 32767
-    public function tryApi7(ApiTester $I)
+    public function tryApi07(ApiTester $I)
     {
         $I->haveHttpHeader('secret', 'QWERTY000097531KEY');
         $I->haveHttpHeader('Content-Type', 'application/json');
@@ -88,7 +91,7 @@ class ApiCest
         ]);
     }
     //Запрос POST со значением amount 32768
-    public function tryApi8(ApiTester $I)
+    public function tryApi08(ApiTester $I)
     {
         $I->haveHttpHeader('secret', 'QWERTY000097531KEY');
         $I->haveHttpHeader('Content-Type', 'application/json');
@@ -99,7 +102,7 @@ class ApiCest
         $I->seeResponseContains('{"resp_code":"333","message":"It is too much amount"}');
     }
     //Запрос POST со значением amount ABC
-    public function tryApi9(ApiTester $I)
+    public function tryApi09(ApiTester $I)
     {
         $I->haveHttpHeader('secret', 'QWERTY000097531KEY');
         $I->haveHttpHeader('Content-Type', 'application/json');
@@ -276,6 +279,7 @@ class ApiCest
         $I->sendPost('/mnogopay/s/purchase',[ "amount"=>123,"currency"=>"123", "order_id"=>"NTS123",
             "phone"=>88001234578, "description"=>"abc"]);
         $I->seeResponseCodeIs(403);
+        $I->seeResponseContains(self::ResponseError);
 
     }
 }
