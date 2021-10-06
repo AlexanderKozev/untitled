@@ -121,7 +121,7 @@ class ApiCest
             "phone"=>88001234578, "description"=>"abc"]);
         $I->seeResponseCodeIs(200);
         $I->seeResponseIsJson();
-        $I->seeResponseContains('{"resp_code":"222","message":"Required parameter is absent: amount"}');
+        $I->seeResponseContains('{"resp_code":"222","message":"Required parameter is absent : amount"}');
     }
     //Запрос POST со значением currency USD
     public function tryApi11(ApiTester $I)
@@ -188,25 +188,25 @@ class ApiCest
     {
         $I->haveHttpHeader('secret', 'QWERTY000097531KEY');
         $I->haveHttpHeader('Content-Type', 'application/json');
-        $I->sendPost('/mnogopay/s/purchase',[ "amount"=>123,"currency"=>"123", "order_id"=>"NTS12345678912345",
+        $I->sendPost('/mnogopay/s/purchase',[ "amount"=>123,"currency"=>"RUB", "order_id"=>"NTS12345678912345",
             "phone"=>88001234578, "description"=>"abc"]);
         $I->seeResponseCodeIs(200);
         $I->seeResponseIsJson();
         $I->seeResponseContains('{"resp_code":"111","message":"Incorrect parameter in request order_id: NTS12345678912345"}');
     }
-    //Запрос POST со значением order_id 1234567891234  (16 символов)
+    //Запрос POST со значением order_id 1234567891234  (12 символов)
     public function tryApi17(ApiTester $I)
     {
         $I->haveHttpHeader('secret', 'QWERTY000097531KEY');
         $I->haveHttpHeader('Content-Type', 'application/json');
-        $I->sendPost('/mnogopay/s/purchase',[ "amount"=>123,"currency"=>"RUB", "order_id"=>"NTS1234567891234",
+        $I->sendPost('/mnogopay/s/purchase',[ "amount"=>123,"currency"=>"RUB", "order_id"=>"NTS123456789",
             "phone"=>88001234578, "description"=>"abc"]);
         $I->seeResponseCodeIs(200);
         $I->seeResponseIsJson();
         $date = date('YmdHi',strtotime('-3 hours'));
         $I->seeResponseContainsJson([
             'payment_id' => "payment_$date",
-            'order_id' => 'NTS1234567891234',
+            'order_id' => 'NTS123456789',
             'resp_code' => '000'
         ]);
     }
